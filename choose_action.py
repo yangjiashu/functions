@@ -1,4 +1,4 @@
-def choose_action(state, epsilon):
+def choose_action(self, state, epsilon):
 
     # 提取出index=state的一行getrow，并找出该行最大Q值的action，即最大值对应的下标
     getrow = self.q_table.loc[[state],:].ix[0]

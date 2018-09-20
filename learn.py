@@ -15,7 +15,7 @@ def learn(self, s, a, r, s_, a_, done, alpha=0.5, gamma=0.9, lam=0.8):
     error = target - self.q_table.loc[[s],a].iloc[0]
 
     # step-4 update the tables
-    self.e_table[[s],a] = 1
+    self.e_table.loc[[s],a] = 1
     self.q_table = self.q_table + alpha*error*self.e_table
     
     # step-5 update e_table

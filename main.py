@@ -11,12 +11,30 @@ if __name__ == '__main__':
         for t in times:
             states.append(tuple([c,t]))
 
+    actions = [0.2, 0.4, 0.6, 0.8, 1.0]
     
-    RL = Q_lamine()
+    env = Airline(capacity, times)	
+    RL = Q_lam(states, actions)
     iter_times = 1000
 
     # block-2 iteration
-    for _ in range(iter_times + 1):
+    for i in range(iter_times + 1):
         s = env.reset()
-        a = np.random.choice()
-    
+        a = np.random.choice(actions)
+        
+        while True:
+            s_, r, done, info = env.step(a)
+            
+            # not terminal
+            if not done:
+                a_ = RL.choose_action(s_, 0.1)
+                RL.learn(s, a, r, s_, a_, done)
+                s = s_
+                a = a_
+            # terminal
+            else:
+                a_ = a
+                RL.learn(s, a, r, s_, a_,done) 
+                break
+    if i % 50 == 0:
+        print(env.q_table)
